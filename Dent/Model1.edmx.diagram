@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="13cd0c78dbfd445a94ac8ca7e82159ed" Name="Diagram1">
+        <EntityTypeShape EntityType="dentbaseModel.Администраторы" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dentbaseModel.Врачи" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dentbaseModel.Записи" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dentbaseModel.История_записей" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="dentbaseModel.Пользователи" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dentbaseModel.Услуги" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <AssociationConnector Association="dentbaseModel.FK__История_з__ID_вр__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="dentbaseModel.FK__История_з__ID_за__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="dentbaseModel.FK__История_з__ID_по__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="dentbaseModel.FK__История_з__ID_ус__2E1BDC42" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

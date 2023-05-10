@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище dentbaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Администраторы">
+          <Key>
+            <PropertyRef Name="Логин" />
+          </Key>
+          <Property Name="Логин" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Пароль" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Врачи">
+          <Key>
+            <PropertyRef Name="ID_врача" />
+          </Key>
+          <Property Name="ID_врача" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="30" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="30" />
+          <Property Name="Отчество" Type="nvarchar" MaxLength="30" />
+          <Property Name="Номер_телефона" Type="varchar" MaxLength="12" />
+          <Property Name="Пароль" Type="nvarchar" MaxLength="25" />
+          <Property Name="Стаж" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Записи">
+          <Key>
+            <PropertyRef Name="ID_Записи" />
+          </Key>
+          <Property Name="ID_Записи" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Дата" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="История_записей">
+          <Key>
+            <PropertyRef Name="ID_Истории" />
+          </Key>
+          <Property Name="ID_Истории" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_услуги" Type="int" />
+          <Property Name="ID_записи" Type="int" />
+          <Property Name="ID_пользователя" Type="int" />
+          <Property Name="ID_врача" Type="int" />
+          <Property Name="СтатусЗаписи" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Пользователи">
+          <Key>
+            <PropertyRef Name="ID_пользователя" />
+          </Key>
+          <Property Name="ID_пользователя" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="30" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="30" />
+          <Property Name="Отчество" Type="nvarchar" MaxLength="30" />
+          <Property Name="Дата_рождения" Type="date" />
+          <Property Name="Пароль" Type="nvarchar" MaxLength="25" />
+          <Property Name="Номер_телефона" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="Услуги">
+          <Key>
+            <PropertyRef Name="ID_услуги" />
+          </Key>
+          <Property Name="ID_услуги" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название_услуги" Type="nvarchar" MaxLength="50" />
+          <Property Name="Цена" Type="money" />
+        </EntityType>
+        <Association Name="FK__История_з__ID_вр__30F848ED">
+          <End Role="Врачи" Type="Self.Врачи" Multiplicity="0..1" />
+          <End Role="История_записей" Type="Self.История_записей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Врачи">
+              <PropertyRef Name="ID_врача" />
+            </Principal>
+            <Dependent Role="История_записей">
+              <PropertyRef Name="ID_врача" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__История_з__ID_за__2F10007B">
+          <End Role="Записи" Type="Self.Записи" Multiplicity="0..1" />
+          <End Role="История_записей" Type="Self.История_записей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Записи">
+              <PropertyRef Name="ID_Записи" />
+            </Principal>
+            <Dependent Role="История_записей">
+              <PropertyRef Name="ID_записи" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__История_з__ID_по__300424B4">
+          <End Role="Пользователи" Type="Self.Пользователи" Multiplicity="0..1" />
+          <End Role="История_записей" Type="Self.История_записей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователи">
+              <PropertyRef Name="ID_пользователя" />
+            </Principal>
+            <Dependent Role="История_записей">
+              <PropertyRef Name="ID_пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__История_з__ID_ус__2E1BDC42">
+          <End Role="Услуги" Type="Self.Услуги" Multiplicity="0..1" />
+          <End Role="История_записей" Type="Self.История_записей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Услуги">
+              <PropertyRef Name="ID_услуги" />
+            </Principal>
+            <Dependent Role="История_записей">
+              <PropertyRef Name="ID_услуги" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище dentbaseModelContainer">
+          <EntitySet Name="Администраторы" EntityType="Self.Администраторы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Врачи" EntityType="Self.Врачи" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Записи" EntityType="Self.Записи" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="История_записей" EntityType="Self.История_записей" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пользователи" EntityType="Self.Пользователи" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Услуги" EntityType="Self.Услуги" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__История_з__ID_вр__30F848ED" Association="Self.FK__История_з__ID_вр__30F848ED">
+            <End Role="Врачи" EntitySet="Врачи" />
+            <End Role="История_записей" EntitySet="История_записей" />
+          </AssociationSet>
+          <AssociationSet Name="FK__История_з__ID_за__2F10007B" Association="Self.FK__История_з__ID_за__2F10007B">
+            <End Role="Записи" EntitySet="Записи" />
+            <End Role="История_записей" EntitySet="История_записей" />
+          </AssociationSet>
+          <AssociationSet Name="FK__История_з__ID_по__300424B4" Association="Self.FK__История_з__ID_по__300424B4">
+            <End Role="Пользователи" EntitySet="Пользователи" />
+            <End Role="История_записей" EntitySet="История_записей" />
+          </AssociationSet>
+          <AssociationSet Name="FK__История_з__ID_ус__2E1BDC42" Association="Self.FK__История_з__ID_ус__2E1BDC42">
+            <End Role="Услуги" EntitySet="Услуги" />
+            <End Role="История_записей" EntitySet="История_записей" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dentbaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Администраторы">
+          <Key>
+            <PropertyRef Name="Логин" />
+          </Key>
+          <Property Name="Логин" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Пароль" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Врачи">
+          <Key>
+            <PropertyRef Name="ID_врача" />
+          </Key>
+          <Property Name="ID_врача" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Фамилия" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Имя" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Отчество" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Номер_телефона" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Пароль" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Стаж" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="История_записей" Relationship="Self.FK__История_з__ID_вр__30F848ED" FromRole="Врачи" ToRole="История_записей" />
+        </EntityType>
+        <EntityType Name="Записи">
+          <Key>
+            <PropertyRef Name="ID_Записи" />
+          </Key>
+          <Property Name="ID_Записи" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Дата" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="История_записей" Relationship="Self.FK__История_з__ID_за__2F10007B" FromRole="Записи" ToRole="История_записей" />
+        </EntityType>
+        <EntityType Name="История_записей">
+          <Key>
+            <PropertyRef Name="ID_Истории" />
+          </Key>
+          <Property Name="ID_Истории" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_услуги" Type="Int32" />
+          <Property Name="ID_записи" Type="Int32" />
+          <Property Name="ID_пользователя" Type="Int32" />
+          <Property Name="ID_врача" Type="Int32" />
+          <Property Name="СтатусЗаписи" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Врачи" Relationship="Self.FK__История_з__ID_вр__30F848ED" FromRole="История_записей" ToRole="Врачи" />
+          <NavigationProperty Name="Записи" Relationship="Self.FK__История_з__ID_за__2F10007B" FromRole="История_записей" ToRole="Записи" />
+          <NavigationProperty Name="Пользователи" Relationship="Self.FK__История_з__ID_по__300424B4" FromRole="История_записей" ToRole="Пользователи" />
+          <NavigationProperty Name="Услуги" Relationship="Self.FK__История_з__ID_ус__2E1BDC42" FromRole="История_записей" ToRole="Услуги" />
+        </EntityType>
+        <EntityType Name="Пользователи">
+          <Key>
+            <PropertyRef Name="ID_пользователя" />
+          </Key>
+          <Property Name="ID_пользователя" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Фамилия" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Имя" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Отчество" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Дата_рождения" Type="DateTime" Precision="0" />
+          <Property Name="Пароль" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Номер_телефона" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="История_записей" Relationship="Self.FK__История_з__ID_по__300424B4" FromRole="Пользователи" ToRole="История_записей" />
+        </EntityType>
+        <EntityType Name="Услуги">
+          <Key>
+            <PropertyRef Name="ID_услуги" />
+          </Key>
+          <Property Name="ID_услуги" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название_услуги" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Цена" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="История_записей" Relationship="Self.FK__История_з__ID_ус__2E1BDC42" FromRole="Услуги" ToRole="История_записей" />
+        </EntityType>
+        <Association Name="FK__История_з__ID_вр__30F848ED">
+          <End Role="Врачи" Type="Self.Врачи" Multiplicity="0..1" />
+          <End Role="История_записей" Type="Self.История_записей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Врачи">
+              <PropertyRef Name="ID_врача" />
+            </Principal>
+            <Dependent Role="История_записей">
+              <PropertyRef Name="ID_врача" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__История_з__ID_за__2F10007B">
+          <End Role="Записи" Type="Self.Записи" Multiplicity="0..1" />
+          <End Role="История_записей" Type="Self.История_записей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Записи">
+              <PropertyRef Name="ID_Записи" />
+            </Principal>
+            <Dependent Role="История_записей">
+              <PropertyRef Name="ID_записи" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__История_з__ID_по__300424B4">
+          <End Role="Пользователи" Type="Self.Пользователи" Multiplicity="0..1" />
+          <End Role="История_записей" Type="Self.История_записей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователи">
+              <PropertyRef Name="ID_пользователя" />
+            </Principal>
+            <Dependent Role="История_записей">
+              <PropertyRef Name="ID_пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__История_з__ID_ус__2E1BDC42">
+          <End Role="Услуги" Type="Self.Услуги" Multiplicity="0..1" />
+          <End Role="История_записей" Type="Self.История_записей" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Услуги">
+              <PropertyRef Name="ID_услуги" />
+            </Principal>
+            <Dependent Role="История_записей">
+              <PropertyRef Name="ID_услуги" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dentbaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Администраторы" EntityType="Self.Администраторы" />
+          <EntitySet Name="Врачи" EntityType="Self.Врачи" />
+          <EntitySet Name="Записи" EntityType="Self.Записи" />
+          <EntitySet Name="История_записей" EntityType="Self.История_записей" />
+          <EntitySet Name="Пользователи" EntityType="Self.Пользователи" />
+          <EntitySet Name="Услуги" EntityType="Self.Услуги" />
+          <AssociationSet Name="FK__История_з__ID_вр__30F848ED" Association="Self.FK__История_з__ID_вр__30F848ED">
+            <End Role="Врачи" EntitySet="Врачи" />
+            <End Role="История_записей" EntitySet="История_записей" />
+          </AssociationSet>
+          <AssociationSet Name="FK__История_з__ID_за__2F10007B" Association="Self.FK__История_з__ID_за__2F10007B">
+            <End Role="Записи" EntitySet="Записи" />
+            <End Role="История_записей" EntitySet="История_записей" />
+          </AssociationSet>
+          <AssociationSet Name="FK__История_з__ID_по__300424B4" Association="Self.FK__История_з__ID_по__300424B4">
+            <End Role="Пользователи" EntitySet="Пользователи" />
+            <End Role="История_записей" EntitySet="История_записей" />
+          </AssociationSet>
+          <AssociationSet Name="FK__История_з__ID_ус__2E1BDC42" Association="Self.FK__История_з__ID_ус__2E1BDC42">
+            <End Role="Услуги" EntitySet="Услуги" />
+            <End Role="История_записей" EntitySet="История_записей" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище dentbaseModelContainer" CdmEntityContainer="dentbaseEntities">
+          <EntitySetMapping Name="Администраторы">
+            <EntityTypeMapping TypeName="dentbaseModel.Администраторы">
+              <MappingFragment StoreEntitySet="Администраторы">
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Врачи">
+            <EntityTypeMapping TypeName="dentbaseModel.Врачи">
+              <MappingFragment StoreEntitySet="Врачи">
+                <ScalarProperty Name="ID_врача" ColumnName="ID_врача" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Номер_телефона" ColumnName="Номер_телефона" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Стаж" ColumnName="Стаж" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Записи">
+            <EntityTypeMapping TypeName="dentbaseModel.Записи">
+              <MappingFragment StoreEntitySet="Записи">
+                <ScalarProperty Name="ID_Записи" ColumnName="ID_Записи" />
+                <ScalarProperty Name="Дата" ColumnName="Дата" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="История_записей">
+            <EntityTypeMapping TypeName="dentbaseModel.История_записей">
+              <MappingFragment StoreEntitySet="История_записей">
+                <ScalarProperty Name="ID_Истории" ColumnName="ID_Истории" />
+                <ScalarProperty Name="ID_услуги" ColumnName="ID_услуги" />
+                <ScalarProperty Name="ID_записи" ColumnName="ID_записи" />
+                <ScalarProperty Name="ID_пользователя" ColumnName="ID_пользователя" />
+                <ScalarProperty Name="ID_врача" ColumnName="ID_врача" />
+                <ScalarProperty Name="СтатусЗаписи" ColumnName="СтатусЗаписи" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пользователи">
+            <EntityTypeMapping TypeName="dentbaseModel.Пользователи">
+              <MappingFragment StoreEntitySet="Пользователи">
+                <ScalarProperty Name="ID_пользователя" ColumnName="ID_пользователя" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Дата_рождения" ColumnName="Дата_рождения" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Номер_телефона" ColumnName="Номер_телефона" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Услуги">
+            <EntityTypeMapping TypeName="dentbaseModel.Услуги">
+              <MappingFragment StoreEntitySet="Услуги">
+                <ScalarProperty Name="ID_услуги" ColumnName="ID_услуги" />
+                <ScalarProperty Name="Название_услуги" ColumnName="Название_услуги" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
